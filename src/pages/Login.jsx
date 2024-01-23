@@ -12,9 +12,13 @@ import * as Yup from 'yup';
 import { api } from '../utils';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 export const Login = () => {
 	const navigate = useNavigate();
+
+	const { setIsAuthenticated } = useContext(AuthContext);
 
 	const formik = useFormik({
 		validationSchema: Yup.object().shape({
@@ -36,6 +40,7 @@ export const Login = () => {
 				resetForm();
 				// 1. store inside local storage
 				localStorage.setItem('session', JSON.stringify(res.data));
+				setIsAuthenticated(true);
 				// 2. navigate user to homepage
 				navigate('/');
 			} catch (error) {
