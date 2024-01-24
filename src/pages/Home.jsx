@@ -8,13 +8,11 @@ export const Home = () => {
 		const getProperties = async () => {
 			const session = JSON.parse(localStorage.getItem('session'));
 
-			const res = await api.get('property', {
-				headers: {
-					Authorization: `Bearer ${session.access_token}`,
-				},
-			});
-			console.log(res.data);
-			setProperties(res.data);
+			const res = await api.get('property');
+			console.log(res?.data);
+			if (res?.data) {
+				setProperties(res.data);
+			}
 		};
 
 		getProperties();
